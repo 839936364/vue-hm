@@ -1,6 +1,6 @@
 {
   "presets": ["env","stage-0"],
-  "plugins": ["transform-runtime",]
+  "plugins": ["transform-runtime","transform-remove-strict-mode"]
 }
 // {
 //     // 此项指明，转码的规则
