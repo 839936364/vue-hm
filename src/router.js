@@ -1,4 +1,8 @@
+import Vue from "vue/dist/vue.js";
+//1.导入vue-router包
 import VueRouter from "vue-router";
+//2.手动安装VueRouter
+Vue.use(VueRouter);
 
 import message from "./components/labber/message.vue";
 import home from "./components/labber/home.vue";

@@ -1,8 +1,15 @@
 <template>
   <div class="app-container">
     <!-- 顶部 -->
-    <!-- <mt-header fixed title="不知道是什么写就对了"></mt-header> -->
-    <header class="header">不知道是什么写就对了</header>
+    <mt-header fixed title="不知道是什么写就对了">
+      <span slot="left" @click="goBack" v-show="flag">
+        <mt-button icon="back">返回</mt-button>
+      </span>
+    </mt-header>
+    <!-- <header class="header">
+      
+      
+    </header>-->
 
     <!-- 中间路由router-view区域 -->
     <transition>
@@ -22,7 +29,7 @@
       </router-link>
       <router-link class="mui-tab-item-xc" to="/shopcar">
         <span class="mui-icon mui-icon-chat">
-          <span class="mui-badge">9</span>
+          <span class="mui-badge">{{$store.getters.getAllCount}}</span>
         </span>
         <span class="mui-tab-label">购物车</span>
       </router-link>
@@ -38,10 +45,31 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      flag: false
+    };
   },
-  methods: {},
-  // props:['']
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    }
+  },
+  created() {
+    if (this.$route.path === "/home") {
+      this.flag = false;
+    }else{
+      this.flag = true;
+    }
+  },
+  watch: {
+    "$route.path": function(newVal) {
+      if (newVal === "/home") {
+        this.flag = false;
+      } else {
+        this.flag = true;
+      }
+    }
+  }
 };
 </script>
 
@@ -52,19 +80,12 @@ export default {
   padding-bottom: 0.5rem;
   overflow-x: hidden;
 }
-
-.header {
-  width: 100%;
+.mint-header {
   height: 0.4rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  background-color: skyblue;
-  line-height: 0.4rem;
-  text-align: center;
-  color: blanchedalmond;
   font-size: 0.16rem;
+  .mint-button-icon {
+    font-size: 0.16rem;
+  }
 }
 
 .v-enter {

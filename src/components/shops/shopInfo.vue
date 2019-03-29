@@ -29,13 +29,11 @@
           </p>
           <p>
             购买数量：
-            <numBox 
-            @getcount="getSelectedCount"
-            :max="getinfoList.stock_quantity"></numBox>
+            <numBox @getcount="getSelectedCount" :max="getinfoList.stock_quantity"></numBox>
           </p>
           <p>
             <mt-button type="primary" size="small">立即购买</mt-button>
-            <mt-button type="danger" size="small">加入购物车</mt-button>
+            <mt-button type="danger" size="small" @click="addShopCar">加入购物车</mt-button>
           </p>
         </div>
       </div>
@@ -70,7 +68,7 @@ export default {
       id: this.$route.params.id,
       getinfoList: {},
       flag: false,
-      selectedCount: 1//保存用户选中的数量,默认买一个
+      selectedCount: 1 //保存用户选中的数量,默认买一个
     };
   },
   created() {
@@ -103,9 +101,16 @@ export default {
     goShopComment(id) {
       this.$router.push({ name: "/home/shopComment", params: { id } });
     },
-    // addShopCar() {
-    //   this.flag = !this.flag;
-    // },
+    addShopCar() {
+      this.flag = !this.flag;
+      let goodsinfo = {
+        id: this.id,
+        count: this.selectedCount,
+        price: this.getinfoList.sell_price,
+        selected:true
+      };
+      this.$store.commit("addToCar",goodsinfo)
+    },
     // beforeEnter(el) {
     //   el.style.transform = "translate(0,0)";
     // },
@@ -121,7 +126,6 @@ export default {
     getSelectedCount(count) {
       this.selectedCount = count;
       console.log(this.selectedCount);
-      
     }
   },
   components: {
